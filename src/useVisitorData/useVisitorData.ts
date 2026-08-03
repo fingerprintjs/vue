@@ -62,7 +62,7 @@ export function useVisitorData({
       } catch (error) {
         // getData re-throws so manual callers can handle errors themselves.
         // Here we swallow the error to avoid an unhandled rejection — it's already stored in the error ref.
-        console.error(`Failed to fetch visitor data on mount: ${error}`)
+        console.error(`Failed to fetch visitor data on mount: ${String(error)}`)
       }
     }
   })
