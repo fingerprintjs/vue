@@ -1,14 +1,6 @@
 import type { FingerprintVisitorQueryData } from '../types'
 import type { FingerprintGetVisitorDataMethod } from './mixins.types'
 
-function setMixinData<Key extends keyof FingerprintVisitorQueryData>(
-  this: any,
-  key: Key,
-  value: FingerprintVisitorQueryData[Key]
-) {
-  this.$data.visitorData[key] = value
-}
-
 const getVisitorData: FingerprintGetVisitorDataMethod = async function (options) {
   /**
    * We use this.$root as a fallback, because in nuxt sometimes this.$fingerprint might be empty, but it might exist in $root
@@ -19,21 +11,19 @@ const getVisitorData: FingerprintGetVisitorDataMethod = async function (options)
     throw new TypeError('$fingerprint is not defined.')
   }
 
-  const setData = setMixinData.bind(this)
+  this.visitorData = { isLoading: true, isFetched: false, data: undefined, error: undefined }
 
   try {
-    setData('isLoading', true)
-    setData('isFetched', false)
-    setData('data', undefined)
-    setData('error', undefined)
-    setData('data', await fingerprint.getVisitorData(options))
-    setData('isFetched', true)
+    const data = await fingerprint.getVisitorData(options)
+
+    this.visitorData = { isLoading: false, isFetched: true, data, error: undefined }
   } catch (error) {
-    setData('data', undefined)
-    setData('error', error instanceof Error ? error : new Error(String(error)))
-    setData('isFetched', false)
-  } finally {
-    setData('isLoading', false)
+    this.visitorData = {
+      isLoading: false,
+      isFetched: false,
+      data: undefined,
+      error: error instanceof Error ? error : new Error(String(error)),
+    }
   }
 }
 
@@ -63,7 +53,7 @@ const getVisitorData: FingerprintGetVisitorDataMethod = async function (options)
  * ```
  */
 export const fingerprintGetVisitorDataMixin = {
-  data() {
+  data(): { visitorData: FingerprintVisitorQueryData } {
     // Initial reactive state — properties must be declared here for Vue reactivity tracking.
     return {
       visitorData: {
@@ -71,7 +61,7 @@ export const fingerprintGetVisitorDataMixin = {
         isFetched: false,
         data: undefined,
         error: undefined,
-      } as FingerprintVisitorQueryData,
+      },
     }
   },
   methods: {

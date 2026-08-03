@@ -1,6 +1,5 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 import { FingerprintPlugin } from '../src'
-import type { FingerprintPluginOptions } from '../src'
 import { INTEGRATION_INFO_PACKAGE_NAME } from '../src/plugin'
 import '../src/vue'
 import { mockGet, mockStart } from './setup'
@@ -57,7 +56,7 @@ describe('FingerprintPlugin', () => {
   it('throws when apiKey is missing', () => {
     expect(() => {
       const app = createApp(EmptyComponent)
-      app.use(FingerprintPlugin, undefined as unknown as FingerprintPluginOptions)
+      app.use(FingerprintPlugin)
     }).toThrow(/apiKey/)
   })
 
@@ -84,7 +83,7 @@ describe('FingerprintPlugin', () => {
     expect(mockStart).toHaveBeenCalledWith(
       expect.objectContaining({
         apiKey: 'test-key',
-        integrationInfo: expect.arrayContaining([`${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`]),
+        integrationInfo: [`${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`],
       })
     )
   })
@@ -102,10 +101,7 @@ describe('FingerprintPlugin', () => {
     expect(mockStart).toHaveBeenCalledTimes(1)
     expect(mockStart).toHaveBeenCalledWith(
       expect.objectContaining({
-        integrationInfo: expect.arrayContaining([
-          'custom/1.0',
-          `${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`,
-        ]),
+        integrationInfo: ['custom/1.0', `${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`],
       })
     )
   })

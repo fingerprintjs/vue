@@ -1,7 +1,7 @@
 import type { Plugin } from 'vue'
 import * as packageInfo from '../package.json'
 import { GET_VISITOR_DATA } from './symbols'
-import type { FingerprintPluginOptions, FingerprintVueGlobalClient } from './types'
+import type { FingerprintPluginOptions } from './types'
 import { getOptions } from './config'
 import { makeGetVisitorData } from './client'
 
@@ -26,14 +26,14 @@ export const INTEGRATION_INFO_PACKAGE_NAME = 'fingerprintjs-pro-vue-v3'
  * ```
  */
 export const FingerprintPlugin: Plugin = {
-  install: (app, options: FingerprintPluginOptions) => {
+  install: (app, options?: FingerprintPluginOptions) => {
     if (options && 'loadOptions' in options) {
       throw new Error(
         'The "loadOptions" option has been removed. Pass options directly to FingerprintPlugin, e.g. { apiKey: "..." } instead of { loadOptions: { apiKey: "..." } }. See the migration guide for details.'
       )
     }
 
-    if (!options?.apiKey) {
+    if (options === undefined || options.apiKey === '') {
       throw new Error('FingerprintPlugin requires an apiKey. Pass { apiKey: "..." } when installing the plugin.')
     }
 
@@ -44,6 +44,6 @@ export const FingerprintPlugin: Plugin = {
 
     app.config.globalProperties.$fingerprint = {
       getVisitorData,
-    } as FingerprintVueGlobalClient
+    }
   },
 }

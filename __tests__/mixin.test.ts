@@ -1,7 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { assert, beforeEach, describe, expect, it } from 'vitest'
 import { fingerprintGetVisitorDataMixin } from '../src'
+import type { FingerprintVueMixins } from '../src'
 import { defineComponent } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
 import { deferred, mountWithPlugin, testData } from './helpers'
 import { mockGet, mockStart } from './setup'
 
@@ -65,8 +67,8 @@ describe('fingerprintGetVisitorDataMixin', () => {
       template: '<div><Child ref="first" /><Child ref="second" /></div>',
     })
 
-    const first = wrapper.getComponent({ ref: 'first' }).vm
-    const second = wrapper.getComponent({ ref: 'second' }).vm
+    const first = wrapper.getComponent<ComponentPublicInstance & FingerprintVueMixins>({ ref: 'first' }).vm
+    const second = wrapper.getComponent<ComponentPublicInstance & FingerprintVueMixins>({ ref: 'second' }).vm
 
     await first.$getVisitorData()
     await second.$getVisitorData({ tag: 'second-instance' })
