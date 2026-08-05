@@ -6,13 +6,10 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "lint": "eslint --ext .js,.ts,.vue --max-warnings 0 .",
-    "lint:fix": "pnpm lint --fix"
+    "preview": "nuxt preview"
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.6.5",
-    "eslint": "^8.57.0",
     "nuxt": "3.20.0",
     "vue-tsc": "^3.2.6"
   },

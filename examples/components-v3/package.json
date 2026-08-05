@@ -4,9 +4,5 @@
   "version": "0.0.0",
   "dependencies": {
     "@fingerprint/vue": "workspace:*"
-  },
-  "scripts": {
-    "lint": "eslint --ext .js,.ts,.vue --max-warnings 0 .",
-    "lint:fix": "pnpm lint --fix"
   }
 }

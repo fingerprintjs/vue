@@ -14,10 +14,10 @@ const STORAGE_VALUES: ReadonlyArray<CacheStorage> = ['sessionStorage', 'localSto
 const DURATION_VALUES: ReadonlyArray<CacheDuration> = ['optimize-cost', 'aggressive']
 
 const isStorage = (value: string | null): value is CacheStorage =>
-  value !== null && (STORAGE_VALUES as ReadonlyArray<string>).includes(value)
+  value !== null && STORAGE_VALUES.some((storage) => storage === value)
 
 const isDuration = (value: string | null): value is CacheDuration =>
-  value !== null && (DURATION_VALUES as ReadonlyArray<string>).includes(value)
+  value !== null && DURATION_VALUES.some((duration) => duration === value)
 
 export const loadCacheConfig = (): ExampleCacheConfig | undefined => {
   if (typeof window === 'undefined') {

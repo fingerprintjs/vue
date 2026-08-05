@@ -2,6 +2,7 @@ import type { GetOptions } from '@fingerprint/agent'
 import type { FingerprintVisitorQueryData, FingerprintVueGlobalClient } from '../types'
 
 export type FingerprintGetVisitorDataMethodThis = {
+  visitorData?: FingerprintVisitorQueryData
   $root?: {
     $fingerprint?: FingerprintVueGlobalClient
   } | null

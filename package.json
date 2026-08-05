@@ -45,54 +45,50 @@
   },
   "private": false,
   "scripts": {
-    "prepare": "husky install",
-    "cm": "cz",
+    "prepare": "husky",
     "build": "vite build",
     "watch": "vite build --watch",
-    "lint": "eslint --ext .js,.ts,.tsx --ignore-path .gitignore --max-warnings 0 . && pnpm -r lint",
-    "lint:fix": "pnpm lint --fix && pnpm -r lint:fix",
+    "lint": "eslint --max-warnings 0 .",
+    "lint:fix": "pnpm lint --fix",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:coverage:diff": "vitest run --coverage --reporter json --outputFile.json=report.json",
-    "test:dts": "tsc --noEmit --isolatedModules --skipLibCheck dist/fingerprint-vue.d.ts",
+    "test:dts": "tsc --noEmit --isolatedModules --skipLibCheck --ignoreConfig dist/fingerprint-vue.d.ts",
     "docs": "typedoc src/index.ts --out docs",
     "changeset:version": "changeset version",
     "changeset:publish": "HUSKY=0 changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.30.0",
-    "@commitlint/cli": "^16.2.4",
-    "@commitlint/config-conventional": "^16.2.4",
+    "@changesets/cli": "^2.31.1",
+    "@commitlint/cli": "^21.2.1",
     "@fingerprintjs/changesets-changelog-format": "^0.2.0",
-    "@fingerprintjs/commit-lint-dx-team": "^0.0.2",
-    "@fingerprintjs/conventional-changelog-dx-team": "^0.1.0",
-    "@fingerprintjs/eslint-config-dx-team": "^0.1.0",
-    "@fingerprintjs/prettier-config-dx-team": "^0.1.0",
+    "@fingerprintjs/commit-lint-dx-team": "^0.1.0",
+    "@fingerprintjs/eslint-config-dx-team": "^3.0.0",
+    "@fingerprintjs/prettier-config-dx-team": "^0.3.0",
     "@fingerprintjs/tsconfig-dx-team": "^0.0.2",
-    "@types/node": "^24.12.2",
-    "@typescript-eslint/eslint-plugin": "^5.50.0",
-    "@typescript-eslint/parser": "^5.50.0",
-    "@vitest/coverage-istanbul": "^4.1.4",
-    "@vue/test-utils": "^2.4.6",
-    "cz-conventional-changelog": "^3.3.0",
-    "dotenv": "^16.4.5",
-    "eslint": "^8.57.0",
-    "eslint-plugin-vue": "^9.23.0",
-    "husky": "^8.0.1",
-    "jsdom": "^24.1.0",
-    "lint-staged": "^13.0.3",
-    "typedoc": "^0.25.12",
-    "typescript": "^5.4.2",
-    "vite": "^7.3.0",
+    "@microsoft/api-extractor": "7.58.1",
+    "@types/node": "^26.1.2",
+    "@vitest/coverage-istanbul": "^4.1.10",
+    "@vue/test-utils": "^2.4.11",
+    "dotenv": "^17.4.2",
+    "eslint": "^10.8.0",
+    "eslint-plugin-vue": "^10.10.0",
+    "husky": "^9.1.7",
+    "jsdom": "^30.0.1",
+    "lint-staged": "^17.2.0",
+    "typedoc": "^0.28.20",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.65.0",
+    "vite": "^8.1.5",
     "vite-plugin-banner": "^0.8.1",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.1.4",
-    "vue": "^3.5.21",
-    "vue-eslint-parser": "^9.4.2",
-    "vue-tsc": "^2.0.6"
+    "vite-plugin-dts": "^5.0.3",
+    "vitest": "^4.1.10",
+    "vue": "^3.5.40",
+    "vue-eslint-parser": "^10.4.1",
+    "vue-tsc": "^3.3.8"
   },
   "dependencies": {
-    "@fingerprint/agent": "^4.0.0"
+    "@fingerprint/agent": "^4.1.3"
   },
   "peerDependencies": {
     "vue": "^3.1"
@@ -101,9 +97,5 @@
     "*.ts": "pnpm lint:fix",
     "*.tsx": "pnpm lint:fix"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+  "packageManager": "pnpm@11.19.0+sha512.7881f3ed590d472c4a955e2b88b2121791116066dcc88cbca3849ec9b60f1bbaa6d2ccb221fa91da4e1c65bef2bcbe379365aea7ac539c7bf86dedc3a1b22dce"
 }

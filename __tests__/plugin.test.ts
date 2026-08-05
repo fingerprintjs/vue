@@ -1,6 +1,5 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 import { FingerprintPlugin } from '../src'
-import type { FingerprintPluginOptions } from '../src'
 import { INTEGRATION_INFO_PACKAGE_NAME } from '../src/plugin'
 import '../src/vue'
 import { mockGet, mockStart } from './setup'
@@ -54,11 +53,49 @@ describe('FingerprintPlugin', () => {
     }).toThrow(/loadOptions/)
   })
 
-  it('throws when apiKey is missing', () => {
-    expect(() => {
-      const app = createApp(EmptyComponent)
-      app.use(FingerprintPlugin, undefined as unknown as FingerprintPluginOptions)
-    }).toThrow(/apiKey/)
+  describe('apiKey validation', () => {
+    const invalidApiKeys: ReadonlyArray<{ label: string; apiKey: unknown }> = [
+      { label: 'undefined', apiKey: undefined },
+      { label: 'null', apiKey: null },
+      { label: 'an empty string', apiKey: '' },
+      { label: 'the number 0', apiKey: 0 },
+      { label: 'false', apiKey: false },
+      { label: 'NaN', apiKey: NaN },
+    ]
+
+    it.each(invalidApiKeys)('throws for a falsy apiKey ($label) and never starts the agent', ({ apiKey }) => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin, { apiKey })
+      }).toThrow(/requires an apiKey/)
+
+      expect(mockStart).not.toHaveBeenCalled()
+    })
+
+    it('throws when installed without any options', () => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin)
+      }).toThrow(/requires an apiKey/)
+
+      expect(mockStart).not.toHaveBeenCalled()
+    })
+
+    it('throws when options is an empty object', () => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin, {})
+      }).toThrow(/requires an apiKey/)
+
+      expect(mockStart).not.toHaveBeenCalled()
+    })
+
+    it('accepts a non-empty apiKey string', () => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin, { apiKey: 'valid-key' })
+      }).not.toThrow()
+    })
   })
 
   it('rejects getVisitorData outside the browser before starting the agent', async () => {
@@ -84,7 +121,7 @@ describe('FingerprintPlugin', () => {
     expect(mockStart).toHaveBeenCalledWith(
       expect.objectContaining({
         apiKey: 'test-key',
-        integrationInfo: expect.arrayContaining([`${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`]),
+        integrationInfo: [`${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`],
       })
     )
   })
@@ -102,10 +139,7 @@ describe('FingerprintPlugin', () => {
     expect(mockStart).toHaveBeenCalledTimes(1)
     expect(mockStart).toHaveBeenCalledWith(
       expect.objectContaining({
-        integrationInfo: expect.arrayContaining([
-          'custom/1.0',
-          `${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`,
-        ]),
+        integrationInfo: ['custom/1.0', `${INTEGRATION_INFO_PACKAGE_NAME}/${packageInfo.version}`],
       })
     )
   })

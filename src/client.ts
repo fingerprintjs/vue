@@ -13,9 +13,7 @@ export function makeGetVisitorData(startOptions: StartOptions): GetVisitorData {
     }
 
     //  Agent is started lazily on first getVisitorData call, then reused for subsequent calls
-    if (!agent) {
-      agent = start(startOptions)
-    }
+    agent ??= start(startOptions)
 
     return agent.get(options)
   }
