@@ -53,11 +53,49 @@ describe('FingerprintPlugin', () => {
     }).toThrow(/loadOptions/)
   })
 
-  it('throws when apiKey is missing', () => {
-    expect(() => {
-      const app = createApp(EmptyComponent)
-      app.use(FingerprintPlugin)
-    }).toThrow(/apiKey/)
+  describe('apiKey validation', () => {
+    const invalidApiKeys: ReadonlyArray<{ label: string; apiKey: unknown }> = [
+      { label: 'undefined', apiKey: undefined },
+      { label: 'null', apiKey: null },
+      { label: 'an empty string', apiKey: '' },
+      { label: 'the number 0', apiKey: 0 },
+      { label: 'false', apiKey: false },
+      { label: 'NaN', apiKey: NaN },
+    ]
+
+    it.each(invalidApiKeys)('throws for a falsy apiKey ($label) and never starts the agent', ({ apiKey }) => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin, { apiKey })
+      }).toThrow(/requires an apiKey/)
+
+      expect(mockStart).not.toHaveBeenCalled()
+    })
+
+    it('throws when installed without any options', () => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin)
+      }).toThrow(/requires an apiKey/)
+
+      expect(mockStart).not.toHaveBeenCalled()
+    })
+
+    it('throws when options is an empty object', () => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin, {})
+      }).toThrow(/requires an apiKey/)
+
+      expect(mockStart).not.toHaveBeenCalled()
+    })
+
+    it('accepts a non-empty apiKey string', () => {
+      expect(() => {
+        const app = createApp(EmptyComponent)
+        app.use(FingerprintPlugin, { apiKey: 'valid-key' })
+      }).not.toThrow()
+    })
   })
 
   it('rejects getVisitorData outside the browser before starting the agent', async () => {

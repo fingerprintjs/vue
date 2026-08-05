@@ -4,6 +4,7 @@ import { GET_VISITOR_DATA } from './symbols'
 import type { FingerprintPluginOptions } from './types'
 import { getOptions } from './config'
 import { makeGetVisitorData } from './client'
+import { isTruthy } from './utils'
 
 // Using the original package name instead of just `vue` for data analytics consistency
 export const INTEGRATION_INFO_PACKAGE_NAME = 'fingerprintjs-pro-vue-v3'
@@ -33,7 +34,7 @@ export const FingerprintPlugin: Plugin = {
       )
     }
 
-    if (options === undefined || options.apiKey === '') {
+    if (!isTruthy(options?.apiKey)) {
       throw new Error('FingerprintPlugin requires an apiKey. Pass { apiKey: "..." } when installing the plugin.')
     }
 
