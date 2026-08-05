@@ -1,5 +1,11 @@
 # @fingerprint/vue
 
+## 2.0.1
+
+### Patch Changes
+
+- Remove unused `tslib` runtime dependency. ([5b3e95d](https://github.com/fingerprintjs/vue/commit/5b3e95d82a3181219bd4f6d383f80ca3e2ba8a78))
+
 ## 2.0.0
 
 ### Major Changes
