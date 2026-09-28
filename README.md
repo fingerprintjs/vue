@@ -283,6 +283,13 @@ Version 2.0 upgrades the underlying Fingerprint agent from v3 to v4 and introduc
 
 You can find detailed documentation in the [API reference](https://fingerprintjs.github.io/vue).
 
+## Version support
+
+| SDK major version | JS Agent version | Status | End of support |
+|---|---|---|---|
+| v2.x (current) | [v4](https://docs.fingerprint.com/reference/js-agent) | Supported | - |
+| v1.x | [v3](https://docs.fingerprint.com/reference/v3/javascript-agent) | Deprecated (security fixes only). See the [migration guide](https://docs.fingerprint.com/docs/vuejs#migration-guide-for-vue-sdk-v2-0-0). | To be decided |
+
 ## Support and feedback
 
 To ask questions or provide feedback, use [Issues](https://github.com/fingerprintjs/vue/issues). If you need private support, please email us at `oss-support@fingerprint.com`. If you'd like to have a similar Vue wrapper for the [source-available FingerprintJS](https://github.com/fingerprintjs/fingerprintjs), consider creating an issue in the main [FingerprintJS repository](https://github.com/fingerprintjs/fingerprintjs/issues).
