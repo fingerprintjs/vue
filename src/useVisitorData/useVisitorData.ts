@@ -12,7 +12,7 @@ import type { UseGetVisitorDataResult, UseVisitorDataOptions } from './useVisito
  *   const { data, getData, isLoading, isFetched, error } = useVisitorData()
  *
  *   // Or with options:
- *   // const { data, getData, isLoading, isFetched, error } = useVisitorData({ immediate: false, tag: 'my-tag' })
+ *   // const { data, getData, isLoading, isFetched, error } = useVisitorData({ immediate: false, tags: 'my-tag' })
  * }
  * ```
  */
