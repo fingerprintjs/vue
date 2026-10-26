@@ -71,7 +71,7 @@ describe('fingerprintGetVisitorDataMixin', () => {
     const second = wrapper.getComponent<ComponentPublicInstance & FingerprintVueMixins>({ ref: 'second' }).vm
 
     await first.$getVisitorData()
-    await second.$getVisitorData({ tag: 'second-instance' })
+    await second.$getVisitorData({ tags: 'second-instance' })
 
     expect(mockGet).toHaveBeenCalledTimes(2)
     expect(mockStart).toHaveBeenCalledTimes(1)
@@ -119,9 +119,9 @@ describe('fingerprintGetVisitorDataMixin', () => {
     const { vm } = mountMixinComponent()
 
     assert(vm.$getVisitorData, 'Expected mixin to expose $getVisitorData')
-    await vm.$getVisitorData({ tag: 'test-tag', linkedId: 'link123' })
+    await vm.$getVisitorData({ tags: 'test-tag', linkedId: 'link123' })
 
-    expect(mockGet).toHaveBeenCalledWith({ tag: 'test-tag', linkedId: 'link123' })
+    expect(mockGet).toHaveBeenCalledWith({ tags: 'test-tag', linkedId: 'link123' })
   })
 
   it('throws when the plugin is missing', async () => {

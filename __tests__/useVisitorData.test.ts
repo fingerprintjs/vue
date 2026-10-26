@@ -30,20 +30,26 @@ const getDataOptionCases = [
   {
     name: 'passes per-call GetOptions to agent.get()',
     composableOptions: { immediate: false, linkedId: 'default-link' },
-    callOptions: { tag: 'test' },
-    expectedOptions: { tag: 'test', linkedId: 'default-link' },
+    callOptions: { tags: 'test' },
+    expectedOptions: { tags: 'test', linkedId: 'default-link' },
   },
   {
     name: 'merges default GetOptions with per-call options',
-    composableOptions: { immediate: false, tag: 'default-tag' },
+    composableOptions: { immediate: false, tags: 'default-tag' },
     callOptions: { linkedId: 'link456' },
-    expectedOptions: { tag: 'default-tag', linkedId: 'link456' },
+    expectedOptions: { tags: 'default-tag', linkedId: 'link456' },
   },
   {
     name: 'lets per-call options override default options',
-    composableOptions: { immediate: false, tag: 'default-tag', linkedId: 'default-link' },
-    callOptions: { tag: 'override-tag' },
-    expectedOptions: { tag: 'override-tag', linkedId: 'default-link' },
+    composableOptions: { immediate: false, tags: 'default-tag', linkedId: 'default-link' },
+    callOptions: { tags: 'override-tag' },
+    expectedOptions: { tags: 'override-tag', linkedId: 'default-link' },
+  },
+  {
+    name: 'still forwards the deprecated tag option',
+    composableOptions: { immediate: false, tag: 'default-tag' },
+    callOptions: { linkedId: 'link456' },
+    expectedOptions: { tag: 'default-tag', linkedId: 'link456' },
   },
 ] satisfies Array<{
   name: string
@@ -116,7 +122,7 @@ describe('useVisitorData', () => {
     )
 
     await expect(first.getData()).resolves.toEqual(testData)
-    await expect(second.getData({ tag: 'second-instance' })).resolves.toEqual(testData)
+    await expect(second.getData({ tags: 'second-instance' })).resolves.toEqual(testData)
 
     expect(mockGet).toHaveBeenCalledTimes(2)
     expect(mockStart).toHaveBeenCalledTimes(1)
@@ -153,7 +159,7 @@ describe('useVisitorData', () => {
     }
 
     await expect(api.getData()).resolves.toEqual(testData)
-    await expect(fingerprint.getVisitorData({ tag: 'plugin-call' })).resolves.toEqual(testData)
+    await expect(fingerprint.getVisitorData({ tags: 'plugin-call' })).resolves.toEqual(testData)
 
     expect(mockGet).toHaveBeenCalledTimes(2)
     expect(mockStart).toHaveBeenCalledTimes(1)
