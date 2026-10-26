@@ -221,9 +221,9 @@ See the [example Nuxt Application](examples/nuxt-v3-example) for more details.
 
 ## Linking and tagging information
 
-The `visitor_id` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tag`, see [Linking and tagging information](https://docs.fingerprint.com/docs/tagging-information).
+The `visitor_id` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tags`, see [Linking and tagging information](https://docs.fingerprint.com/docs/tagging-information).
 
-Associate your data with a visitor ID using the `linkedId` or `tag` parameter of the `useVisitorData()` composable or the `getData()` function:
+Associate your data with a visitor ID using the `linkedId` or `tags` parameter of the `useVisitorData()` composable or the `getData()` function:
 
 ```vue
 <script setup>
@@ -231,7 +231,7 @@ import { useVisitorData } from '@fingerprint/vue';
 
 const { data, error, isLoading, getData } = useVisitorData({
   linkedId: 'user_1234',
-  tag: {
+  tags: {
     userAction: 'login',
     analyticsId: 'UA-5555-1111-1',
   },
@@ -242,6 +242,9 @@ const { data, error, isLoading, getData } = useVisitorData({
 <!--...-->
 </template>
 ```
+
+> [!NOTE]
+> The `tag` option is deprecated in favor of `tags`. `tag` still works, but if both are provided, `tags` takes precedence.
 
 ## Direct agent access
 
