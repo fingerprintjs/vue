@@ -1,5 +1,15 @@
 # @fingerprint/vue
 
+## 2.1.0
+
+### Minor Changes
+
+- Deprecate `tag` in favor of `tags` ([15a910e](https://github.com/fingerprintjs/vue/commit/15a910e5407dc54b308151b124a2f07a41c9c8b9))
+
+### Patch Changes
+
+- Bump `@fingerprint/agent` dependency to `^4.1.6` ([15a910e](https://github.com/fingerprintjs/vue/commit/15a910e5407dc54b308151b124a2f07a41c9c8b9))
+
 ## 2.0.1
 
 ### Patch Changes
